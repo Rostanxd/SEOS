@@ -23,9 +23,10 @@
         <h2 class="header">Provincias</h2>
         <div class="collection">
             {% for provincia in provincias_list_all %}
-                <a class="collection-item"><span class="badge"><i class="material-icons">send</i></span>{{ provincia.nombre }}</a>
+                <a href="{% url 'pos:provincia_detail' provincia.pk %}" class="collection-item"><span class="badge"><i class="material-icons">send</i></span>{{ provincia.nombre }}</a>
             {% endfor %}
         </div>
+        <a class="waves-effect waves-light btn" href="{% url 'pos:provincia_new' %}">Nuevo</a>
     </div>
 </body>
 </html>

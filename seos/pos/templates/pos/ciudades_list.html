@@ -23,7 +23,7 @@
         <h2 class="header">Ciudades</h2>
         <div class="collection">
             {% for ciudad in ciudades_list_all %}
-                <a class="collection-item"><span class="badge"><i class="material-icons">send</i></span>{{ ciudad.nombre }}</a>
+                <a href="{% url 'pos:ciudad_detail' ciudad.pk %}" class="collection-item"><span class="badge"><i class="material-icons">send</i></span>{{ ciudad.nombre }}</a>
             {% endfor %}
         </div>
     </div>
