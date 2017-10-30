@@ -1,32 +1,59 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/css/materialize.min.css"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <meta charset="UTF-8">
-    <title>Provincias</title>
-</head>
-<body>
-    <nav>
-        <div class="nav-wrapper">
-            <a href="#!" class="brand-logo"><i class="material-icons">cloud</i>SEOS</a>
-            <ul class="right hide-on-med-and-down">
-                <li><a href="sass.html"><i class="material-icons">search</i></a></li>
-                <li><a href="badges.html"><i class="material-icons">view_module</i></a></li>
-                <li><a href="collapsible.html"><i class="material-icons">refresh</i></a></li>
-                <li><a href="mobile.html"><i class="material-icons">more_vert</i></a></li>
-            </ul>
-        </div>
-    </nav>
-    <div class="card-panel">
-        <h2 class="header">Provincias</h2>
-        <div class="collection">
-            {% for provincia in provincias_list_all %}
-                <a href="{% url 'pos:provincia_detail' provincia.pk %}" class="collection-item"><span class="badge"><i class="material-icons">send</i></span>{{ provincia.nombre }}</a>
-            {% endfor %}
-        </div>
-        <a class="waves-effect waves-light btn" href="{% url 'pos:provincia_new' %}">Nuevo</a>
+{% extends 'base/baseMain.html' %}
+
+{% block header %}
+{% endblock %}
+
+{% block content %}
+    <h2 class="header">Provincias</h2>
+    <div class="collection">
+        {% for provincia in provincias_list_all %}
+            <a href="{% url 'pos:provincia_detail' provincia.pk %}" class="collection-item">
+                <span class="badge">
+                    <i class="material-icons">send</i>
+                </span>
+                {{ provincia.nombre }}
+            </a>
+        {% endfor %}
     </div>
-</body>
-</html>
+    {% if is_paginated %}
+        <ul class="pagination">
+            {% if page_obj.has_previous %}
+                <li class="waves-effect">
+                    <a href="?page={{ page_obj.previous_page_number }}">
+                        <i class="material-icons">chevron_left</i>
+                    </a>
+                </li>
+            {% else %}
+                <li class="disabled">
+                    <span>
+                        <i class="material-icons">chevron_left</i>
+                    </span>
+                </li>
+            {% endif %}
+            {% for i in paginator.page_range %}
+                {% if page_obj.number == i %}
+                    <li class="active"><a href="#!">{{ i }}</a></li>
+                {% else %}
+                    <li class="waves-effect"><a href="?page={{ i }}">{{ i }}</a></li>
+                {% endif %}
+            {% endfor %}
+            {% if page_obj.has_next %}
+                <li>
+                    <a href="?page={{ page_obj.next_page_number }}">
+                        <i class="material-icons">chevron_right</i>
+                    </a>
+                </li>
+            {% else %}
+                <li class="disabled">
+                    <span>
+                        <i class="material-icons">chevron_right</i>
+                    </span>
+                </li>
+            {% endif %}
+        </ul>
+    {% endif %}
+    <a class="waves-effect waves-light btn" href="{% url 'pos:provincia_new' %}">Nuevo</a>
+{% endblock %}
+
+{% block footer %}
+{% endblock %}

@@ -46,6 +46,19 @@ def provincia_edit(request, pk):
     return render(request, 'pos/provincia_edit.html', {'provincia': provincia})
 
 
+def ciudad_new(request):
+    provincias = Provincia.objects.all()
+    if request.method == "POST":
+        form = CiudadForm(request.POST)
+        if form.is_valid():
+            ciudad = form.save()
+            ciudad.save()
+            return redirect('pos:ciudad_detail', pk=ciudad.pk)
+    else:
+        form = CiudadForm()
+    return render(request, 'pos/ciudad_edit.html', {'form':form, 'provincias': provincias})
+
+
 def ciudad_detail(request, pk):
     ciudad = get_object_or_404(Ciudad, pk=pk)
     return render(request, 'pos/ciudad_detail.html', {'ciudad': ciudad})
@@ -68,11 +81,13 @@ def ciudad_edit(request, pk):
 
 
 class ListProvinciaView(ListView):
+    model = Provincia
     template_name = 'pos/provincias_list.html'
     context_object_name = 'provincias_list_all'
+    paginate_by = 10
 
     def get_queryset(self):
-        return Provincia.objects.all()
+        return Provincia.objects.all().order_by('nombre')
 
 
 class DetailProvinciaView(DetailView):
@@ -93,11 +108,13 @@ class CreateProvinciaView(CreateView):
 
 
 class ListCiudadesView(ListView):
+    model = Ciudad
     template_name = 'pos/ciudades_list.html'
     context_object_name = 'ciudades_list_all'
+    paginate_by = 15
 
     def get_queryset(self):
-        return Ciudad.objects.all()
+        return Ciudad.objects.all().order_by('nombre')
 
 
 class DetailCiudadView(DetailView):
