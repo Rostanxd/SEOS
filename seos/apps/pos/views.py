@@ -10,7 +10,7 @@ from .models import Provincia, Ciudad
 from .forms import ProvinciaForm, CiudadForm
 
 
-def index():
+def index(request):
     return HttpResponse("Hello, world. You're at the pos index.")
 
 
@@ -125,7 +125,7 @@ class DetailCiudadView(DetailView):
 class CreateCiudadView(CreateView):
     model = Ciudad
     fields = '__all__'
-    # template_name = 'pos/ciudad_edit.html'
+    template_name = 'pos/ciudad_edit.html'
 
     def get_success_url(self):
         return reverse('ciudades_list')

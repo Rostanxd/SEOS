@@ -24,7 +24,7 @@
             </div>
             <div class="input-field col s12">
                 <i class="material-icons prefix">short_text</i>
-                <label for="nombre">Provincia:</label>
+                <label for="provincia">Provincia:</label>
                 <input id="provincia" type="text" name="provincia" value="{{ ciudad.provincia.nombre }}" disabled>
             </div>
             <a class="waves-effect waves-light btn green lighten-2" href="{% url 'pos:ciudad_edit' pk=ciudad.pk %}">Editar</a>
