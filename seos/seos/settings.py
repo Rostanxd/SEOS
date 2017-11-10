@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'apps.pos'
+    'apps.pos',
+    'apps.sistema',
 ]
 
 MIDDLEWARE = [
@@ -134,13 +135,13 @@ STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 
-LOGIN_REDIRECT_URL = reverse_lazy('pos:provincias_list')
+LOGIN_REDIRECT_URL = reverse_lazy('sistema:main')
 LOGOUT_REDIRECT_URL = reverse_lazy('login')
 
 
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.live.com'
 EMAIL_PORT = 25
-EMAIL_HOST_USER = 'allowed_g@hotmail.com'
-EMAIL_HOST_PASSWORD = 'erisebastian123'
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

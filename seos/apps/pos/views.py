@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
@@ -10,10 +11,12 @@ from .models import Provincia, Ciudad
 from .forms import ProvinciaForm, CiudadForm
 
 
+@login_required
 def index(request):
     return HttpResponse("Hello, world. You're at the pos index.")
 
 
+@login_required
 def provincia_new(request):
     if request.method == "POST":
         form = ProvinciaForm(request.POST)
@@ -26,11 +29,13 @@ def provincia_new(request):
     return render(request, 'pos/provincia_edit.html', {'form':form})
 
 
+@login_required
 def provincia_detail(request, pk):
     provincia = get_object_or_404(Provincia, pk=pk)
     return render(request, 'pos/provincia_detail.html', {'provincia': provincia})
 
 
+@login_required
 def provincia_edit(request, pk):
     provincia = get_object_or_404(Provincia, pk=pk)
     if request.method == "POST":
@@ -46,6 +51,7 @@ def provincia_edit(request, pk):
     return render(request, 'pos/provincia_edit.html', {'provincia': provincia})
 
 
+@login_required
 def ciudad_new(request):
     provincias = Provincia.objects.all()
     if request.method == "POST":
@@ -59,11 +65,13 @@ def ciudad_new(request):
     return render(request, 'pos/ciudad_edit.html', {'form':form, 'provincias': provincias})
 
 
+@login_required
 def ciudad_detail(request, pk):
     ciudad = get_object_or_404(Ciudad, pk=pk)
     return render(request, 'pos/ciudad_detail.html', {'ciudad': ciudad})
 
 
+@login_required
 def ciudad_edit(request, pk):
     ciudad = get_object_or_404(Ciudad, pk=pk)
     provincias = Provincia.objects.all()
@@ -80,6 +88,7 @@ def ciudad_edit(request, pk):
     return render(request, 'pos/ciudad_edit.html', {'ciudad': ciudad, 'provincias': provincias})
 
 
+@login_required
 class ListProvinciaView(ListView):
     model = Provincia
     template_name = 'pos/provincias_list.html'
@@ -90,6 +99,7 @@ class ListProvinciaView(ListView):
         return Provincia.objects.all().order_by('nombre')
 
 
+@login_required
 class DetailProvinciaView(DetailView):
     model = Provincia
     template_name = 'pos/provincia_detail.html'
@@ -98,6 +108,7 @@ class DetailProvinciaView(DetailView):
         return Provincia.objects.all()
 
 
+@login_required
 class CreateProvinciaView(CreateView):
     model = Provincia
     fields = '__all__'
@@ -107,6 +118,7 @@ class CreateProvinciaView(CreateView):
         return reverse('provincias_list')
 
 
+@login_required
 class ListCiudadesView(ListView):
     model = Ciudad
     template_name = 'pos/ciudades_list.html'
@@ -117,11 +129,13 @@ class ListCiudadesView(ListView):
         return Ciudad.objects.all().order_by('nombre')
 
 
+@login_required
 class DetailCiudadView(DetailView):
     model = Ciudad
     template_name = 'pos/ciudad_detail.html'
 
 
+@login_required
 class CreateCiudadView(CreateView):
     model = Ciudad
     fields = '__all__'
